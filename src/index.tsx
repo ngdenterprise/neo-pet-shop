@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import App from "./App";
+import PetShopApp from "./PetShopApp";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <PetShopApp />
   </React.StrictMode>,
   document.getElementById("root")
 );

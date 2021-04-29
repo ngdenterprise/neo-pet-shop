@@ -2,8 +2,8 @@ import React from "react";
 
 import RequireWallet from "./components/RequireWallet/RequireWallet";
 
-function App() {
+function PetShopApp() {
   return <RequireWallet>Coming soon</RequireWallet>;
 }
 
-export default App;
+export default PetShopApp;
