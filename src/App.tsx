@@ -1,7 +1,9 @@
 import React from "react";
 
+import RequireWallet from "./components/RequireWallet/RequireWallet";
+
 function App() {
-  return <>Coming soon</>;
+  return <RequireWallet>Coming soon</RequireWallet>;
 }
 
 export default App;
