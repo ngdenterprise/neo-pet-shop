@@ -2,17 +2,17 @@
   {
     "contract": "GasToken",
     "operation": "transfer",
-    "args": ["@genesis", "@owner", 10000, "Setup"]
+    "args": ["@genesis", "@owner", 100000000000, "Setup"]
   },
   {
     "contract": "GasToken",
     "operation": "transfer",
-    "args": ["@genesis", "@alice", 10000, "Setup"]
+    "args": ["@genesis", "@alice", 100000000000, "Setup"]
   },
   {
     "contract": "GasToken",
     "operation": "transfer",
-    "args": ["@genesis", "@bob", 10000, "Setup"]
+    "args": ["@genesis", "@bob", 100000000000, "Setup"]
   },
   {
     "contract": "NeoToken",
