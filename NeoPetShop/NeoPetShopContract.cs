@@ -80,7 +80,7 @@ namespace NeoPetShop
             metadata.Put(METADATA_KEY_OWNER, tx.Sender);
         }
 
-        // Feeds an adopted pet (can be invoked by anyone, not just the pets owner).
+        // Feeds an adopted pet (can be invoked by anyone, not just the pet's owner).
         public static void Feed(BigInteger petId)
         {
             if (GetPetOwner(petId) == UInt160.Zero)
@@ -110,7 +110,7 @@ namespace NeoPetShop
 
         // Returns the current adoptive owner of a pet (or Zero if the pet is
         // available for adoption).
-        public static Neo.UInt160 GetPetOwner(BigInteger petId)
+        public static UInt160 GetPetOwner(BigInteger petId)
         {
             string petKey = ValidatePetId(petId);
             var petsMap = Storage.CurrentContext.CreateMap(PET_MAP);
@@ -121,16 +121,16 @@ namespace NeoPetShop
             }
             else
             {
-                return (Neo.UInt160) owner;
+                return (UInt160) owner;
             }
         }
 
         // Returns the address of the shop owner.
-        public static Neo.UInt160 GetShopOwner()
+        public static UInt160 GetShopOwner()
         {
             var metadataMap = Storage.CurrentContext.CreateMap(METADATA_MAP);
             ByteString owner = metadataMap.Get(METADATA_KEY_OWNER);
-            return (owner == null) ? Neo.UInt160.Zero : (Neo.UInt160) owner;
+            return (owner == null) ? UInt160.Zero : (UInt160) owner;
         }
 
         // Returns true if it has been so long since a pet has been fed by its adoptive
