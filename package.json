@@ -13,7 +13,9 @@
   },
   "scripts": {
     "start": "BROWSER=none react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build"
+    "build": "npm run buildweb && npm run buildcontract",
+    "buildcontract": "cd NeoPetShop && dotnet build",
+    "buildweb": "GENERATE_SOURCEMAP=false react-scripts build"
   },
   "eslintConfig": {
     "extends": [
