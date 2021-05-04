@@ -3,8 +3,8 @@ using System.ComponentModel;
 using System.Numerics;
 using Neo;
 using Neo.SmartContract.Framework;
-using Neo.SmartContract.Framework.Services.Neo;
-using Neo.SmartContract.Framework.Services.System;
+using Neo.SmartContract.Framework.Native;
+using Neo.SmartContract.Framework.Services;
 
 namespace NeoPetShop
 {
@@ -58,8 +58,8 @@ namespace NeoPetShop
             }
 
             string petKey = ValidatePetId(petId);
-            var petsMap = Storage.CurrentContext.CreateMap(PET_MAP);
-            var tx = (Transaction) ExecutionEngine.ScriptContainer;
+            var petsMap = new StorageMap(Storage.CurrentContext, PET_MAP);
+            var tx = (Transaction) Runtime.ScriptContainer;
             petsMap.Put(petKey, tx.Sender);
             OnPetAdopted(petId, tx.Sender);
             Feed (petId);
@@ -75,8 +75,8 @@ namespace NeoPetShop
                 return;
             }
 
-            var metadata = Storage.CurrentContext.CreateMap(METADATA_MAP);
-            var tx = (Transaction) ExecutionEngine.ScriptContainer;
+            var metadata = new StorageMap(Storage.CurrentContext, METADATA_MAP);
+            var tx = (Transaction) Runtime.ScriptContainer;
             metadata.Put(METADATA_KEY_OWNER, tx.Sender);
         }
 
@@ -88,9 +88,10 @@ namespace NeoPetShop
                 throw new Exception("This pet hasn't been adopted yet, or ran away because it was too hungry!");
             }
             string petKey = ValidatePetId(petId);
-            var feedingMap = Storage.CurrentContext.CreateMap(FEEDING_MAP);
+            var feedingMap =
+                new StorageMap(Storage.CurrentContext, FEEDING_MAP);
             var time = Runtime.Time;
-            var tx = (Transaction) ExecutionEngine.ScriptContainer;
+            var tx = (Transaction) Runtime.ScriptContainer;
             feedingMap.Put(petKey, StdLib.Itoa(time));
             OnPetFed(petId, tx.Sender, time);
         }
@@ -99,7 +100,8 @@ namespace NeoPetShop
         public static BigInteger GetLastFeedingTime(BigInteger petId)
         {
             string petKey = ValidatePetId(petId);
-            var feedingMap = Storage.CurrentContext.CreateMap(FEEDING_MAP);
+            var feedingMap =
+                new StorageMap(Storage.CurrentContext, FEEDING_MAP);
             ByteString feedingData = feedingMap.Get(petKey);
             if (feedingData == null)
             {
@@ -113,7 +115,7 @@ namespace NeoPetShop
         public static UInt160 GetPetOwner(BigInteger petId)
         {
             string petKey = ValidatePetId(petId);
-            var petsMap = Storage.CurrentContext.CreateMap(PET_MAP);
+            var petsMap = new StorageMap(Storage.CurrentContext, PET_MAP);
             ByteString owner = petsMap.Get(petKey);
             if (owner == null || IsHungry(petId))
             {
@@ -128,8 +130,8 @@ namespace NeoPetShop
         // Returns the address of the shop owner.
         public static UInt160 GetShopOwner()
         {
-            var metadataMap = Storage.CurrentContext.CreateMap(METADATA_MAP);
-            ByteString owner = metadataMap.Get(METADATA_KEY_OWNER);
+            var metadata = new StorageMap(Storage.CurrentContext, METADATA_MAP);
+            ByteString owner = metadata.Get(METADATA_KEY_OWNER);
             return (owner == null) ? UInt160.Zero : (UInt160) owner;
         }
 
@@ -164,7 +166,7 @@ namespace NeoPetShop
         // Confirms that the current transaction was created by the shop owner.
         private static void ValidateShopOwner()
         {
-            var tx = (Transaction) ExecutionEngine.ScriptContainer;
+            var tx = (Transaction) Runtime.ScriptContainer;
             var owner = GetShopOwner();
             if (!owner.Equals(tx.Sender))
             {
