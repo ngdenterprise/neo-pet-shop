@@ -3,3 +3,4 @@ bin
 build
 node_modules
 obj
+*.neo-wallet.json
