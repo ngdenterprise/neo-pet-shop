@@ -12,7 +12,7 @@ type Props = {
 /**
  * This component will only render its children when the NeoLine
  * extension has ben detected.  Before the extension is detected,
- * it will display a message explaining how to insstall the extension.
+ * it will display a message explaining how to install the extension.
  */
 export default function RequireWallet({ children }: Props) {
   const [neoLineDetected, setNeoLineDetected] = useState(false);
