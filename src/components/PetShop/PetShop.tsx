@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 
+import Pet from "./Pet";
 import WalletContext from "../WalletContext/WalletContext";
 
 /**
@@ -7,5 +8,28 @@ import WalletContext from "../WalletContext/WalletContext";
  */
 export default function PetShop() {
   const walletContextData = useContext(WalletContext);
-  return <pre>{JSON.stringify(walletContextData, undefined, 2)}</pre>;
+  if (!walletContextData.pets.length) {
+    return <div>Loading&hellip;</div>;
+  }
+  return (
+    <div
+      style={{
+        alignContent: "stretch",
+        alignItems: "center",
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-evenly",
+      }}
+    >
+      {walletContextData.pets.map((_) => (
+        <Pet
+          key={_.petId}
+          isHungry={_.isHungry}
+          lastFed={_.lastFed}
+          petId={_.petId}
+          owner={_.owner}
+        />
+      ))}
+    </div>
+  );
 }
