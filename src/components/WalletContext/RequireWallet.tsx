@@ -38,10 +38,6 @@ export default function RequireWallet({ children }: Props) {
     setTimeout(() => setShowSplashScreen(false), SPLASH_SCREEN_DURATION_MS);
   }, []);
 
-  useEffect(() => {
-    setInterval(() => setWalletContext({ helloWorld: "" + new Date() }), 1000);
-  }, []);
-
   if (neoLineDetected) {
     return (
       <WalletContext.Provider value={walletContext}>

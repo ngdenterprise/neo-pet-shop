@@ -7,5 +7,5 @@ import WalletContext from "../WalletContext/WalletContext";
  */
 export default function PetShop() {
   const walletContextData = useContext(WalletContext);
-  return <>The Neo Pet Shop is opening soon! {walletContextData.helloWorld}</>;
+  return <pre>{JSON.stringify(walletContextData, undefined, 2)}</pre>;
 }

@@ -1,5 +1,5 @@
 import WalletContextData from "./WalletContextData";
 
-const defaultWalletContext: WalletContextData = { helloWorld: "Hello world" };
+const defaultWalletContext: WalletContextData = { pets: [] };
 
 export default defaultWalletContext;
