@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import WalletContext from "../RequireWallet/WalletContext";
+import WalletContext from "../WalletContext/WalletContext";
 
 /**
  * Renders the main Pet Shop UI, expects to have access to a wallet context
