@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 
+import defaultWalletContext from "./defaultWalletContext";
 import RequireWalletInstallationInstructions from "./RequireWalletInstallationInstructions";
 import RequireWalletSplashScreen from "./RequireWalletSplashScreen";
+import WalletContext from "./WalletContext";
 
 const SPLASH_SCREEN_DURATION_MS = 3000;
 
@@ -17,6 +19,7 @@ type Props = {
 export default function RequireWallet({ children }: Props) {
   const [neoLineDetected, setNeoLineDetected] = useState(false);
   const [showSplashScreen, setShowSplashScreen] = useState(true);
+  const [walletContext, setWalletContext] = useState(defaultWalletContext);
 
   useEffect(() => {
     window.addEventListener("NEOLine.NEO.EVENT.READY", () => {
@@ -28,8 +31,16 @@ export default function RequireWallet({ children }: Props) {
     setTimeout(() => setShowSplashScreen(false), SPLASH_SCREEN_DURATION_MS);
   }, []);
 
+  useEffect(() => {
+    setInterval(() => setWalletContext({ helloWorld: "" + new Date() }), 1000);
+  }, []);
+
   if (neoLineDetected) {
-    return children;
+    return (
+      <WalletContext.Provider value={walletContext}>
+        {children}
+      </WalletContext.Provider>
+    );
   } else if (showSplashScreen) {
     return <RequireWalletSplashScreen />;
   } else {

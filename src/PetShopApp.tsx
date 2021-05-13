@@ -1,13 +1,15 @@
 import React from "react";
 
 import CenterInScreen from "./components/CenterInScreen";
-
+import PetShop from "./components/PetShop/PetShop";
 import RequireWallet from "./components/RequireWallet/RequireWallet";
 
 function PetShopApp() {
   return (
     <CenterInScreen>
-      <RequireWallet>The Neo Pet Shop is opening soon!</RequireWallet>
+      <RequireWallet>
+        <PetShop />
+      </RequireWallet>
     </CenterInScreen>
   );
 }
