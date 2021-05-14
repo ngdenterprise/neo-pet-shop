@@ -1,4 +1,5 @@
 import InvokeReadArgs from "./InvokeReadArgs";
+import NeoAccount from "./NeoAccount";
 import TypedValue from "./TypedValue";
 
 type GetBalanceArgs = { address: string; contracts: string[] };
@@ -8,7 +9,7 @@ type GetBalanceArgs = { address: string; contracts: string[] };
  * https://neoline.io/dapi/N3.html
  */
 interface NeoLineN3Interface {
-  getAccount(): Promise<{ address: string; label: string }>;
+  getAccount(): Promise<NeoAccount>;
 
   getBalance(params: GetBalanceArgs[]): Promise<{
     [address: string]: { contract: string; symbol: string; amount: string }[];

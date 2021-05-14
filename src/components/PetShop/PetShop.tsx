@@ -5,12 +5,13 @@ import Pet from "./Pet";
 
 type Props = {
   contractState: ContractState;
+  adopt: (petId: number) => Promise<void>;
 };
 
 /**
  * Renders the main Pet Shop UI
  */
-export default function PetShop({ contractState }: Props) {
+export default function PetShop({ adopt, contractState }: Props) {
   if (!contractState.pets.length) {
     return <div>Loading&hellip;</div>;
   }
