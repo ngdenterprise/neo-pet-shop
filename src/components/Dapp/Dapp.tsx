@@ -48,8 +48,19 @@ export default function Dapp() {
     await PetShopContract.adopt(neoLine, petId, account);
   };
 
+  const feed = async (petId: number) => {
+    if (!neoLine) {
+      return;
+    }
+    const account = await neoLine.getAccount();
+    if (!account) {
+      return;
+    }
+    await PetShopContract.feed(neoLine, petId, account);
+  };
+
   if (!!neoLine) {
-    return <PetShop adopt={adopt} contractState={contractState} />;
+    return <PetShop contractState={contractState} adopt={adopt} feed={feed} />;
   } else if (showSplashScreen) {
     return <SplashScreen />;
   } else {

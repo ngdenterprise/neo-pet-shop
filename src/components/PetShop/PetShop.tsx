@@ -6,12 +6,13 @@ import Pet from "./Pet";
 type Props = {
   contractState: ContractState;
   adopt: (petId: number) => Promise<void>;
+  feed: (petId: number) => Promise<void>;
 };
 
 /**
  * Renders the main Pet Shop UI
  */
-export default function PetShop({ adopt, contractState }: Props) {
+export default function PetShop({ contractState, adopt, feed }: Props) {
   if (!contractState.pets.length) {
     return <div>Loading&hellip;</div>;
   }
@@ -33,6 +34,7 @@ export default function PetShop({ adopt, contractState }: Props) {
           petId={_.petId}
           owner={_.owner}
           adoptMe={!_.owner ? () => adopt(_.petId) : undefined}
+          feedMe={!!_.owner ? () => feed(_.petId) : undefined}
         />
       ))}
     </div>

@@ -6,6 +6,7 @@ type Props = {
   owner?: string;
   lastFed: Date;
   adoptMe?: () => Promise<void>;
+  feedMe?: () => Promise<void>;
 };
 
 /**
@@ -17,6 +18,7 @@ export default function Pet({
   owner,
   lastFed,
   adoptMe,
+  feedMe,
 }: Props) {
   return (
     <div style={{ margin: 10, padding: 10, textAlign: "center" }}>
@@ -33,6 +35,11 @@ export default function Pet({
       {!!adoptMe && (
         <div>
           <button onClick={adoptMe}>Adopt me!</button>
+        </div>
+      )}
+      {!!feedMe && (
+        <div>
+          <button onClick={feedMe}>Feed me!</button>
         </div>
       )}
     </div>

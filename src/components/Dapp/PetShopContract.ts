@@ -30,6 +30,27 @@ const PetShopContract = {
     console.log("adopttx result", result);
   },
 
+  feed: async (
+    neoLine: NeoLineN3Interface,
+    petId: number,
+    account: NeoAccount
+  ) => {
+    //
+    // TODO: Figure out why this doesn't work. See:
+    //       https://github.com/NeoNEXT/neoline/issues/52
+    //
+
+    const result = await neoLine.invoke({
+      scriptHash: CONTRACT_HASH,
+      operation: "feed",
+      args: [{ type: "Integer", value: `${petId}` }],
+      signers: [
+        { account: base58.decode(account.address).toString("hex"), scopes: 1 },
+      ],
+    });
+    console.log("feedtx result", result);
+  },
+
   updateContractState: async (
     neoLine: NeoLineN3Interface,
     setContractState: (updatedState: ContractState) => void
