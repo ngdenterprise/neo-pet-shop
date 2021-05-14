@@ -5,7 +5,7 @@ const CONTRACT_HASH = "0x11a57cc4da0c0020e8deb18092ed0b6c2e106b59";
 const NO_OWNER = "AAAAAAAAAAAAAAAAAAAAAAAAAAA=";
 const PET_COUNT = 16;
 
-async function updateContext(
+async function updateContractState(
   neoLine: NeoLineN3Interface,
   setContractState: React.Dispatch<React.SetStateAction<ContractState>>
 ) {
@@ -54,4 +54,4 @@ async function updateContext(
   setContractState(updatedContractState);
 }
 
-export default updateContext;
+export default updateContractState;

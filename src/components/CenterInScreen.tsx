@@ -17,7 +17,7 @@ export default function CenterInScreen({ children }: Props) {
         minHeight: "100vh",
       }}
     >
-      {children}
+      <div>{children}</div>
     </div>
   );
 }

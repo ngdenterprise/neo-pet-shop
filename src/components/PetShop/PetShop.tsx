@@ -1,7 +1,6 @@
 import React from "react";
 
-import CenterInScreen from "../CenterInScreen";
-import ContractState from "../WalletContext/ContractState";
+import ContractState from "../Dapp/ContractState";
 import Pet from "./Pet";
 
 type Props = {
@@ -16,26 +15,24 @@ export default function PetShop({ contractState }: Props) {
     return <div>Loading&hellip;</div>;
   }
   return (
-    <CenterInScreen>
-      <div
-        style={{
-          alignContent: "stretch",
-          alignItems: "center",
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-evenly",
-        }}
-      >
-        {contractState.pets.map((_) => (
-          <Pet
-            key={_.petId}
-            isHungry={_.isHungry}
-            lastFed={_.lastFed}
-            petId={_.petId}
-            owner={_.owner}
-          />
-        ))}
-      </div>
-    </CenterInScreen>
+    <div
+      style={{
+        alignContent: "stretch",
+        alignItems: "center",
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-evenly",
+      }}
+    >
+      {contractState.pets.map((_) => (
+        <Pet
+          key={_.petId}
+          isHungry={_.isHungry}
+          lastFed={_.lastFed}
+          petId={_.petId}
+          owner={_.owner}
+        />
+      ))}
+    </div>
   );
 }

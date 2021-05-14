@@ -1,11 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import RequireWallet from "./components/WalletContext/RequireWallet";
+import CenterInScreen from "./components/CenterInScreen";
+import Dapp from "./components/Dapp/Dapp";
 
 ReactDOM.render(
   <React.StrictMode>
-    <RequireWallet />
+    <CenterInScreen>
+      <Dapp />
+    </CenterInScreen>
   </React.StrictMode>,
   document.getElementById("root")
 );
