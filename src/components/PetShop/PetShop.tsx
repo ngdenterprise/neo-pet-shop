@@ -32,6 +32,7 @@ export default function PetShop({ adopt, contractState }: Props) {
           lastFed={_.lastFed}
           petId={_.petId}
           owner={_.owner}
+          adoptMe={!_.owner ? () => adopt(_.petId) : undefined}
         />
       ))}
     </div>

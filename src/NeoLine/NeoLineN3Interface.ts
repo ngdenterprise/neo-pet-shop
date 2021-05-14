@@ -1,5 +1,7 @@
 import InvokeReadArgs from "./InvokeReadArgs";
+import InvokeWriteArgs from "./InvokeWriteArgs";
 import NeoAccount from "./NeoAccount";
+import Signers from "./Signers";
 import TypedValue from "./TypedValue";
 
 type GetBalanceArgs = { address: string; contracts: string[] };
@@ -15,8 +17,10 @@ interface NeoLineN3Interface {
     [address: string]: { contract: string; symbol: string; amount: string }[];
   }>;
 
+  invoke(params: InvokeReadArgs & InvokeWriteArgs & Signers): Promise<any>;
+
   invokeRead(
-    params: InvokeReadArgs & { signers: { account: string; scopes: number }[] }
+    params: InvokeReadArgs & Signers
   ): Promise<{ script: string; stack: TypedValue[]; state: string }>;
 
   // Note that the order of items in the result array is not consistent with

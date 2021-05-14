@@ -5,12 +5,19 @@ type Props = {
   isHungry: boolean;
   owner?: string;
   lastFed: Date;
+  adoptMe?: () => Promise<void>;
 };
 
 /**
  * Renders an individual pet
  */
-export default function Pet({ petId, isHungry, owner, lastFed }: Props) {
+export default function Pet({
+  petId,
+  isHungry,
+  owner,
+  lastFed,
+  adoptMe,
+}: Props) {
   return (
     <div style={{ margin: 10, padding: 10, textAlign: "center" }}>
       <div>
@@ -23,6 +30,11 @@ export default function Pet({ petId, isHungry, owner, lastFed }: Props) {
       )}
       <div>Last fed: {`${lastFed}`}</div>
       {!!owner && <div>Owner: {owner}</div>}
+      {!!adoptMe && (
+        <div>
+          <button onClick={adoptMe}>Adopt me!</button>
+        </div>
+      )}
     </div>
   );
 }

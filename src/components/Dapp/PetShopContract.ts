@@ -1,3 +1,5 @@
+import base58 from "bs58";
+
 import ContractState from "./ContractState";
 import NeoAccount from "../../NeoLine/NeoAccount";
 import NeoLineN3Interface from "../../NeoLine/NeoLineN3Interface";
@@ -11,7 +13,22 @@ const PetShopContract = {
     neoLine: NeoLineN3Interface,
     petId: number,
     account: NeoAccount
-  ) => {},
+  ) => {
+    //
+    // TODO: Figure out why this doesn't work. See:
+    //       https://github.com/NeoNEXT/neoline/issues/52
+    //
+
+    const result = await neoLine.invoke({
+      scriptHash: CONTRACT_HASH,
+      operation: "adoptPet",
+      args: [{ type: "Integer", value: `${petId}` }],
+      signers: [
+        { account: base58.decode(account.address).toString("hex"), scopes: 1 },
+      ],
+    });
+    console.log("adopttx result", result);
+  },
 
   updateContractState: async (
     neoLine: NeoLineN3Interface,
