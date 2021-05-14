@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import PetShopApp from "./PetShopApp";
+import RequireWallet from "./components/WalletContext/RequireWallet";
 
 ReactDOM.render(
   <React.StrictMode>
-    <PetShopApp />
+    <RequireWallet />
   </React.StrictMode>,
   document.getElementById("root")
 );
