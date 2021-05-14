@@ -14,7 +14,7 @@
   "scripts": {
     "start": "BROWSER=none react-scripts start",
     "build": "npm run buildweb && npm run buildcontract",
-    "buildcontract": "cd NeoPetShop && dotnet tool restore && dotnet restore && dotnet build",
+    "buildcontract": "cd NeoPetShop && dotnet tool restore && dotnet restore && dotnet build /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary",
     "buildweb": "GENERATE_SOURCEMAP=false react-scripts build"
   },
   "eslintConfig": {
