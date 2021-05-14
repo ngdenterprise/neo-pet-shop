@@ -21,15 +21,16 @@ type Props = {
 export default function RequireWallet({ children }: Props) {
   const [neoLineDetected, setNeoLineDetected] = useState(false);
   const [showSplashScreen, setShowSplashScreen] = useState(true);
-  const [walletContext, setWalletContext] = useState(defaultWalletContext);
+  const [walletContextData, setWalletContextData] =
+    useState(defaultWalletContext);
 
   useEffect(() => {
     window.addEventListener("NEOLine.NEO.EVENT.READY", async () => {
       setNeoLineDetected(true);
       const neoLine = await NeoLineN3Init();
-      await updateContext(neoLine, setWalletContext);
+      await updateContext(neoLine, walletContextData, setWalletContextData);
       window.addEventListener("NEOLine.NEO.EVENT.BLOCK_HEIGHT_CHANGED", () =>
-        updateContext(neoLine, setWalletContext)
+        updateContext(neoLine, walletContextData, setWalletContextData)
       );
     });
   }, []);
@@ -40,7 +41,7 @@ export default function RequireWallet({ children }: Props) {
 
   if (neoLineDetected) {
     return (
-      <WalletContext.Provider value={walletContext}>
+      <WalletContext.Provider value={walletContextData}>
         {children}
       </WalletContext.Provider>
     );

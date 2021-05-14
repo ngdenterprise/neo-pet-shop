@@ -7,9 +7,13 @@ const PET_COUNT = 16;
 
 async function updateContext(
   neoLine: NeoLineN3Interface,
-  setContext: React.Dispatch<React.SetStateAction<WalletContextData>>
+  walletContextData: WalletContextData,
+  setWalletContextData: React.Dispatch<React.SetStateAction<WalletContextData>>
 ) {
-  const newWalletContextData: WalletContextData = { pets: [] };
+  const newWalletContextData: WalletContextData = {
+    ...walletContextData,
+    pets: [],
+  };
   for (let petId = 0; petId < PET_COUNT; petId++) {
     const [ownerResult, lastFedResult, hungerResult] = await Promise.all([
       neoLine.invokeRead({
@@ -51,7 +55,9 @@ async function updateContext(
 
     newWalletContextData.pets.push({ petId, isHungry, owner, lastFed });
   }
-  setContext(newWalletContextData);
+  setWalletContextData(newWalletContextData);
+
+  console.log(await neoLine.getAccount());
 }
 
 export default updateContext;

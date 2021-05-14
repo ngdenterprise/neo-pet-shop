@@ -8,6 +8,8 @@ type GetBalanceArgs = { address: string; contracts: string[] };
  * https://neoline.io/dapi/N3.html
  */
 interface NeoLineN3Interface {
+  getAccount(): Promise<{ address: string; label: string }>;
+
   getBalance(params: GetBalanceArgs[]): Promise<{
     [address: string]: { contract: string; symbol: string; amount: string }[];
   }>;
