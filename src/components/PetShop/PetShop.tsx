@@ -1,35 +1,41 @@
-import React, { useContext } from "react";
+import React from "react";
 
+import CenterInScreen from "../CenterInScreen";
+import ContractState from "../WalletContext/ContractState";
 import Pet from "./Pet";
-import WalletContext from "../WalletContext/WalletContext";
+
+type Props = {
+  contractState: ContractState;
+};
 
 /**
- * Renders the main Pet Shop UI, expects to have access to a wallet context
+ * Renders the main Pet Shop UI
  */
-export default function PetShop() {
-  const walletContextData = useContext(WalletContext);
-  if (!walletContextData.pets.length) {
+export default function PetShop({ contractState }: Props) {
+  if (!contractState.pets.length) {
     return <div>Loading&hellip;</div>;
   }
   return (
-    <div
-      style={{
-        alignContent: "stretch",
-        alignItems: "center",
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-evenly",
-      }}
-    >
-      {walletContextData.pets.map((_) => (
-        <Pet
-          key={_.petId}
-          isHungry={_.isHungry}
-          lastFed={_.lastFed}
-          petId={_.petId}
-          owner={_.owner}
-        />
-      ))}
-    </div>
+    <CenterInScreen>
+      <div
+        style={{
+          alignContent: "stretch",
+          alignItems: "center",
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-evenly",
+        }}
+      >
+        {contractState.pets.map((_) => (
+          <Pet
+            key={_.petId}
+            isHungry={_.isHungry}
+            lastFed={_.lastFed}
+            petId={_.petId}
+            owner={_.owner}
+          />
+        ))}
+      </div>
+    </CenterInScreen>
   );
 }

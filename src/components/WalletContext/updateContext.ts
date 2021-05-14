@@ -1,5 +1,5 @@
+import ContractState from "./ContractState";
 import NeoLineN3Interface from "../../NeoLine/NeoLineN3Interface";
-import WalletContextData from "./WalletContextData";
 
 const CONTRACT_HASH = "0x11a57cc4da0c0020e8deb18092ed0b6c2e106b59";
 const NO_OWNER = "AAAAAAAAAAAAAAAAAAAAAAAAAAA=";
@@ -7,13 +7,9 @@ const PET_COUNT = 16;
 
 async function updateContext(
   neoLine: NeoLineN3Interface,
-  walletContextData: WalletContextData,
-  setWalletContextData: React.Dispatch<React.SetStateAction<WalletContextData>>
+  setContractState: React.Dispatch<React.SetStateAction<ContractState>>
 ) {
-  const newWalletContextData: WalletContextData = {
-    ...walletContextData,
-    pets: [],
-  };
+  const updatedContractState: ContractState = { pets: [] };
   for (let petId = 0; petId < PET_COUNT; petId++) {
     const [ownerResult, lastFedResult, hungerResult] = await Promise.all([
       neoLine.invokeRead({
@@ -53,11 +49,9 @@ async function updateContext(
 
     const isHungry = !!hungerResult.stack[0]?.value;
 
-    newWalletContextData.pets.push({ petId, isHungry, owner, lastFed });
+    updatedContractState.pets.push({ petId, isHungry, owner, lastFed });
   }
-  setWalletContextData(newWalletContextData);
-
-  console.log(await neoLine.getAccount());
+  setContractState(updatedContractState);
 }
 
 export default updateContext;
