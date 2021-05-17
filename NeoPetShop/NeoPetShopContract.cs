@@ -17,11 +17,11 @@ namespace NeoPetShop
     // on vacation? Remember to ask somebody else to feed your pet regularly (anybody can
     // feed a pet, not just the owner).
     //
-    [DisplayName("djnicholson.NeoPetShopContract")]
+    [DisplayName("djnicholson.NeoPetShopContractV2")]
     [ManifestExtra("Author", "David Nicholson")]
     [ManifestExtra("Email", "david@djntrading.com")]
     [ManifestExtra("Description", "Facilitates adoption of virtual pets")]
-    public class NeoPetShopContract : SmartContract
+    public class NeoPetShopContractV2 : SmartContract
     {
         // Keys used to index the contract storage:
         const string PET_MAP = "PetOwners";
@@ -36,7 +36,7 @@ namespace NeoPetShop
         const ulong REQUIRED_FEEDING_INTERVAL = 1000 * 60 * 60 * 24; // 1 day
 
         // The total amount of pets available for adoption
-        static readonly BigInteger PET_COUNT = 16;
+        static readonly byte PET_COUNT = 8;
 
         // Fires whenever a pet is adopted (providing the pet ID and the address of the new owner)
         [DisplayName("PetAdopted")]
@@ -60,7 +60,7 @@ namespace NeoPetShop
             string petKey = ValidatePetId(petId);
             var petsMap = new StorageMap(Storage.CurrentContext, PET_MAP);
             var tx = (Transaction) Runtime.ScriptContainer;
-            petsMap.Put(petKey, tx.Sender);
+            petsMap.Put(petKey, (ByteString) tx.Sender);
             OnPetAdopted(petId, tx.Sender);
             Feed (petId);
         }
@@ -77,16 +77,12 @@ namespace NeoPetShop
 
             var metadata = new StorageMap(Storage.CurrentContext, METADATA_MAP);
             var tx = (Transaction) Runtime.ScriptContainer;
-            metadata.Put(METADATA_KEY_OWNER, tx.Sender);
+            metadata.Put(METADATA_KEY_OWNER, (ByteString) tx.Sender);
         }
 
         // Feeds an adopted pet (can be invoked by anyone, not just the pet's owner).
         public static void Feed(BigInteger petId)
         {
-            if (GetPetOwner(petId) == UInt160.Zero)
-            {
-                throw new Exception("This pet hasn't been adopted yet, or ran away because it was too hungry!");
-            }
             string petKey = ValidatePetId(petId);
             var feedingMap =
                 new StorageMap(Storage.CurrentContext, FEEDING_MAP);
@@ -94,6 +90,23 @@ namespace NeoPetShop
             var tx = (Transaction) Runtime.ScriptContainer;
             feedingMap.Put(petKey, StdLib.Itoa(time));
             OnPetFed(petId, tx.Sender, time);
+        }
+
+        // Returns all contract state as JSON for convenient access in web-based dApp.
+        public static string GetAllStateJson()
+        {
+            var pets = new object[PET_COUNT];
+            for (int i = 0; i < PET_COUNT; i++)
+            {
+                pets[i] =
+                    new object[] {
+                        StdLib.Base58Encode(GetPetOwner(i)),
+                        GetLastFeedingTime(i),
+                        IsHungry(i)
+                    };
+            }
+            var result = new object[] { pets };
+            return StdLib.JsonSerialize(result);
         }
 
         // Returns the last time that a pet was fed (in milliseconds).

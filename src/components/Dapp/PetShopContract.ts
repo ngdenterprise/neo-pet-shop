@@ -6,7 +6,7 @@ import NeoLineN3Interface from "../../NeoLine/NeoLineN3Interface";
 
 const CONTRACT_HASH = "0x11a57cc4da0c0020e8deb18092ed0b6c2e106b59";
 const NO_OWNER = "AAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-const PET_COUNT = 16;
+const PET_COUNT = 8;
 
 const PetShopContract = {
   adopt: async (
