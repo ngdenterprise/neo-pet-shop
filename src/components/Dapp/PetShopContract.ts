@@ -4,7 +4,7 @@ import ContractState from "./ContractState";
 import NeoAccount from "../../NeoLine/NeoAccount";
 import NeoLineN3Interface from "../../NeoLine/NeoLineN3Interface";
 
-const CONTRACT_HASH = "0x11a57cc4da0c0020e8deb18092ed0b6c2e106b59";
+const CONTRACT_HASH = "0xbac8fe4db61f69bde42c85a880ebb31f1fcfd1ba";
 const NO_OWNER = "AAAAAAAAAAAAAAAAAAAAAAAAAAA=";
 const PET_COUNT = 8;
 
