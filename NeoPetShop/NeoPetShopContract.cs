@@ -17,11 +17,11 @@ namespace NeoPetShop
     // on vacation? Remember to ask somebody else to feed your pet regularly (anybody can
     // feed a pet, not just the owner).
     //
-    [DisplayName("djnicholson.NeoPetShopContractV2")]
+    [DisplayName("djnicholson.NeoPetShopContract")]
     [ManifestExtra("Author", "David Nicholson")]
     [ManifestExtra("Email", "david@djntrading.com")]
     [ManifestExtra("Description", "Facilitates adoption of virtual pets")]
-    public class NeoPetShopContractV2 : SmartContract
+    public class NeoPetShopContract : SmartContract
     {
         // Keys used to index the contract storage:
         const string PET_MAP = "PetOwners";
@@ -100,7 +100,9 @@ namespace NeoPetShop
             {
                 pets[i] =
                     new object[] {
-                        StdLib.Base58Encode(GetPetOwner(i)),
+                        // TODO: Return base58-check encoded address when possible, see:
+                        // https://github.com/neo-project/neo/issues/2471 is resolved
+                        StdLib.Base64Encode(GetPetOwner(i)),
                         GetLastFeedingTime(i),
                         IsHungry(i)
                     };
