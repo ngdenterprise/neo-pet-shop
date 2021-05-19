@@ -31,7 +31,7 @@ const PetShopContract = {
       args: [{ type: "Integer", value: `${petId}` }],
       signers: [
         {
-          account: bs58check.decode(account.address).toString("hex"),
+          account: bs58check.decode(account.address).toString("hex").substr(2),
           scopes: 1,
         },
       ],
@@ -55,7 +55,7 @@ const PetShopContract = {
       args: [{ type: "Integer", value: `${petId}` }],
       signers: [
         {
-          account: bs58check.decode(account.address).toString("hex"),
+          account: bs58check.decode(account.address).toString("hex").substr(2),
           scopes: 1,
         },
       ],
