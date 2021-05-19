@@ -1,10 +1,17 @@
-import base58 from "bs58";
+import bs58check from "bs58check";
 
 import ContractState from "./ContractState";
 import NeoAccount from "../../NeoLine/NeoAccount";
 import NeoLineN3Interface from "../../NeoLine/NeoLineN3Interface";
 
-const CONTRACT_HASH = "0xbac8fe4db61f69bde42c85a880ebb31f1fcfd1ba";
+const reverseHexString = (hexString: string) =>
+  hexString
+    .match(/[a-fA-F0-9]{2}/g)
+    ?.reverse()
+    .join("");
+
+const CONTRACT_HASH =
+  "0x" + reverseHexString("bac8fe4db61f69bde42c85a880ebb31f1fcfd1ba");
 const NO_OWNER = "AAAAAAAAAAAAAAAAAAAAAAAAAAA=";
 const PET_COUNT = 8;
 
@@ -18,13 +25,15 @@ const PetShopContract = {
     // TODO: Figure out why this doesn't work. See:
     //       https://github.com/NeoNEXT/neoline/issues/52
     //
-
     const result = await neoLine.invoke({
       scriptHash: CONTRACT_HASH,
       operation: "adoptPet",
       args: [{ type: "Integer", value: `${petId}` }],
       signers: [
-        { account: base58.decode(account.address).toString("hex"), scopes: 1 },
+        {
+          account: bs58check.decode(account.address).toString("hex"),
+          scopes: 1,
+        },
       ],
     });
     console.log("adopttx result", result);
@@ -45,7 +54,10 @@ const PetShopContract = {
       operation: "feed",
       args: [{ type: "Integer", value: `${petId}` }],
       signers: [
-        { account: base58.decode(account.address).toString("hex"), scopes: 1 },
+        {
+          account: bs58check.decode(account.address).toString("hex"),
+          scopes: 1,
+        },
       ],
     });
     console.log("feedtx result", result);
